@@ -18,9 +18,12 @@ public:
 	VectorXd operator()(VectorXd &);
 	MatrixXd &tangent(VectorXd &);
 	MatrixXd &R();
+	MatrixXd &Rinv(); // inverse covariance matrix
+
 
 	MatrixXd H;
 	MatrixXd Rm;
+	MatrixXd Rmi;
 };
 
 #endif /* TELESCOPE_H_ */

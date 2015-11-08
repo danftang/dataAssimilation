@@ -8,7 +8,9 @@
 #include <iostream>
 #include <vector>
 #include <eigen3/Eigen/Dense>
-#include "Planet.h"
+#include "ThreeBodyModel.h"
+#include "Telescope.h"
+#include "FourDVar.h"
 
 using namespace Eigen;
 
@@ -21,8 +23,6 @@ void randomize(VectorXd &v, std::default_random_engine &gen) {
 }
 
 
-
-
 int main()
 {
     const int TIMESTEPS = 3;
@@ -31,6 +31,7 @@ int main()
     ThreeBodyModel myModel;
     Telescope H;
     MatrixXd P0(12,12);		// co-variance of background state error
+    MatrixXd P0inv(12,12);		// inverse of co-variance of background state error
     VectorXd b0(12);		// background state
     VectorXd noise(8);
     VectorXd x0t(12);		// true start state
@@ -38,39 +39,52 @@ int main()
     std::vector<VectorXd> y(TIMESTEPS,VectorXd(8)); // observations
     std::vector<VectorXd> xt(TIMESTEPS,myModel.state()); // forward integral states
     std::vector<MatrixXd> Mt(TIMESTEPS,myModel.tangent()); // tangent linear models
-    FourDVar fdvar(myModel, y, H, P0, b0);
+    FourDVar fdvar(myModel, H, y, P0inv, b0);
 
 
     // --- initialise matrices
     // -----------------------
 
-    P0.setZero();
-    P0.block(0,0,2,2) = pow(Planet::l,2)*Matrix2d::Identity(); // position variance
-    P0.block(2,2,2,2) = pow(1e-3*Planet::l/Planet::dt,2)*Matrix2d::Identity(); // velocity variance
-    P0.block(4,4,4,4) = P0.block(0,0,4,4);
-    P0.block(8,8,4,4) = P0.block(0,0,4,4);
+    P0.setIdentity();
+//    P0.setZero();
+//    P0.block(0,0,2,2) = pow(Planet::l,2)*Matrix2d::Identity(); // position variance
+//    P0.block(2,2,2,2) = pow(1e-3*Planet::l/Planet::dt,2)*Matrix2d::Identity(); // velocity variance
+ //   P0.block(4,4,4,4) = P0.block(0,0,4,4);
+//    P0.block(8,8,4,4) = P0.block(0,0,4,4);
+    P0inv = P0.inverse();
 
     b0.setZero();
     x0t = myModel.state();
-    std::cout << "True start state =" << std::endl << x0t << std::endl;
+    std::cout << "True start state =" << std::endl << x0t.transpose(); std::cout << std::endl;
 
     // -- create observations
     // ----------------------
 
     for(t=0; t<TIMESTEPS; ++t) {
     	randomize(noise,gen);
-    	y[t] = H(myModel.state()) + H.R()*noise;
+    	y[t] = H(myModel.state());// + H.R()*noise;
+        std::cout << "Observation = " << y[t].transpose(); std::cout << std::endl;
     	myModel.step();
-
-        std::cout << "Observation = " << std::endl;
-        std::cout << y[t] << std::endl;
     }
+
+    // -- test adjoint
+    MatrixXd lambda(12,1);
+    fdvar.df(x0t,lambda);
+    std::cout << "jacobian = " << lambda.transpose() << std::endl;
 
     // -- now do data analysis
     // -----------------------
 
     // -- first guess at state
-    myModel.firstGuess(y[0]);
+//    myModel.firstGuess(y[0]);
+    VectorXd solution(x0t);
+    solution[3] += 0.1;
+    solution[4] += 0.1;
+    fdvar.assimilate(solution);
+
+    std::cout << "Solved start state =" << std::endl << solution.transpose(); std::cout << std::endl;
+    std::cout << "Solution error =" << std::endl << solution.transpose()-x0t.transpose(); std::cout << std::endl;
+
 
     return 0;
 }

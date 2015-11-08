@@ -9,6 +9,7 @@
 #define THREEBODYMODEL_H_
 
 #include "Model.h"
+#include "Planet.h"
 
 class ThreeBodyModel : public Model {
 public:

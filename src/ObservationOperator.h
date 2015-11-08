@@ -12,8 +12,9 @@
 using namespace Eigen;
 
 class ObservationOperator {
+public:
 	virtual ~ObservationOperator() {};
-	virtual VectorXd &operator ()()=0;
+	virtual VectorXd operator ()(VectorXd &)=0;
 	virtual MatrixXd &tangent(VectorXd &)=0; // tangent linear
 	virtual MatrixXd &R()=0; // covariance matrix
 	virtual MatrixXd &Rinv()=0; // inverse covariance matrix

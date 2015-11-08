@@ -14,6 +14,7 @@ using namespace Eigen;
 
 
 class Model {
+public:
 	virtual ~Model() {};
 	virtual void 		step()=0;
 	virtual VectorXd &	state()=0;
