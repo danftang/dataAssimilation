@@ -9,10 +9,13 @@
 
 using namespace Eigen;
 
-const double Planet::G = 6.674e-11;    	// gravitational constant
-const double Planet::AU = 1.496e11;    	// Astronomical unit
-const double Planet::dt = 3600.0*24*7; 	// timestep
-const double Planet::l  = AU/20.0;		// characteristic length scale
+//const double Planet::G = 6.674e-11;    	// gravitational constant
+//const double Planet::AU = 1.496e11;    	// Astronomical unit
+//const double Planet::dt = 3600.0*24*7; 	// timestep
+//const double Planet::l  = AU/20.0;		// characteristic length scale
+const double Planet::G = 1.0;
+const double Planet::dt = 0.1;
+
 std::default_random_engine Planet::gen;
 std::normal_distribution<> Planet::gaussian(0,1.0);
 
@@ -27,7 +30,7 @@ Planet::Planet(VectorXd &state, MatrixXd &Jacobian, int j) :
 		dvp_dx1(Jacobian,j+2,(j+4)%12),
 		dvp_dx2(Jacobian,j+2,(j+8)%12)
 {
-    m = 5.972e24; // mass of Earth
+    m = 1.0;//5.972e24; // mass of Earth
     initState();
 
     // --- fill in the constant parts of the Jacobian
@@ -40,10 +43,14 @@ Planet::Planet(VectorXd &state, MatrixXd &Jacobian, int j) :
 }
 
 void Planet::initState() {
-    x[0] = l*gaussian(gen);
-    x[1] = l*gaussian(gen);
-    v[0] = (1e-3*l/dt)*gaussian(gen);
-    v[1] = (1e-3*l/dt)*gaussian(gen);
+//    x[0] = l*gaussian(gen);
+//    x[1] = l*gaussian(gen);
+//    v[0] = (1e-3*l/dt)*gaussian(gen);
+//    v[1] = (1e-3*l/dt)*gaussian(gen);
+    x[0] = gaussian(gen);
+    x[1] = gaussian(gen);
+    v[0] = gaussian(gen);
+    v[1] = gaussian(gen);
 }
 
 void Planet::step(Planet &other1, Planet &other2) {

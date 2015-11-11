@@ -7,22 +7,25 @@
 
 #ifndef FOURDVAR_H_
 #define FOURDVAR_H_
-#include <eigen3/Eigen/Dense>
+#include <Eigen/Dense>
 #include <vector>
 
-#include "LevMarSolver.h"
+//#include "LevMarSolver.h"
 #include "ObservationOperator.h"
 #include "Model.h"
+#include "nloptEigen.hpp"
 
 using namespace Eigen;
 
-class FourDVar : public LevMarSolver<FourDVar> {
+class FourDVar {
 public:
 	FourDVar(Model &, ObservationOperator &, std::vector<VectorXd> &, MatrixXd &, VectorXd &);
 
 //	void observe(std::vector<VectorXd> &);
-	int df(const VectorXd &, MatrixXd &);		// jacobian of error
-	int operator()(const VectorXd &, VectorXd &); // error
+//	int df(const VectorXd &, MatrixXd &);		// jacobian of error
+//	int operator()(const VectorXd &, VectorXd &); // error
+    double operator()(Eigen::Map<const Eigen::VectorXd> &x, Eigen::Map<Eigen::VectorXd> &grad);
+    double operator()(const Eigen::VectorXd &x, VectorXd &grad);
 
 
 	void assimilate(VectorXd &);
@@ -33,6 +36,8 @@ public:
     ObservationOperator &H;
     MatrixXd &P0inv;	// inverse of co-variance of background state error
     VectorXd &b0;		// background state
+
+    NloptEigen solver;
 
 
 };

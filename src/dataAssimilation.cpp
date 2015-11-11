@@ -25,7 +25,7 @@ void randomize(VectorXd &v, std::default_random_engine &gen) {
 
 int main()
 {
-    const int TIMESTEPS = 3;
+    const int TIMESTEPS = 6;
     int t;
 	std::default_random_engine gen;
     ThreeBodyModel myModel;
@@ -41,7 +41,6 @@ int main()
     std::vector<MatrixXd> Mt(TIMESTEPS,myModel.tangent()); // tangent linear models
     FourDVar fdvar(myModel, H, y, P0inv, b0);
 
-
     // --- initialise matrices
     // -----------------------
 
@@ -55,7 +54,6 @@ int main()
 
     b0.setZero();
     x0t = myModel.state();
-    std::cout << "True start state =" << std::endl << x0t.transpose(); std::cout << std::endl;
 
     // -- create observations
     // ----------------------
@@ -63,13 +61,13 @@ int main()
     for(t=0; t<TIMESTEPS; ++t) {
     	randomize(noise,gen);
     	y[t] = H(myModel.state());// + H.R()*noise;
-        std::cout << "Observation = " << y[t].transpose(); std::cout << std::endl;
+        std::cout << "Observation = " << y[t].transpose() << std::endl;
     	myModel.step();
     }
 
     // -- test adjoint
-    MatrixXd lambda(12,1);
-    fdvar.df(x0t,lambda);
+    VectorXd lambda(12);
+    fdvar(x0t,lambda);
     std::cout << "jacobian = " << lambda.transpose() << std::endl;
 
     // -- now do data analysis
@@ -77,13 +75,18 @@ int main()
 
     // -- first guess at state
 //    myModel.firstGuess(y[0]);
+//    VectorXd solution(myModel.state());
     VectorXd solution(x0t);
-    solution[3] += 0.1;
-    solution[4] += 0.1;
+    solution[10] += 0.1;
+    solution[11] += 0.1;
+
+    std::cout << "  True start state =\t" << x0t.transpose() << std::endl;
+    std::cout << "     Initial guess =\t" << solution.transpose() << std::endl;
+
     fdvar.assimilate(solution);
 
-    std::cout << "Solved start state =" << std::endl << solution.transpose(); std::cout << std::endl;
-    std::cout << "Solution error =" << std::endl << solution.transpose()-x0t.transpose(); std::cout << std::endl;
+    std::cout << "Solved start state =\t" << solution.transpose() << std::endl;
+    std::cout << "    Solution error =\t" << solution.transpose()-x0t.transpose() << std::endl;
 
 
     return 0;
