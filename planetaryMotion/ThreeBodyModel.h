@@ -18,14 +18,14 @@ public:
 	void step();
 	VectorXd &state();
 	MatrixXd &tangent();
-	void firstGuess(VectorXd &);
+//	void firstGuess(VectorXd &);
 
     VectorXd x; 		// state vector
     MatrixXd M;			// Tangent linear model
     Planet p1;			// planet abstractions
     Planet p2;
     Planet p3;
-
+    static const int N_VARS; // number of variables in the state
 
 };
 

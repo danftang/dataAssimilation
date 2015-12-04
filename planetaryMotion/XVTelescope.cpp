@@ -6,13 +6,15 @@
  */
 
 #include <iostream>
-#include "Telescope.h"
+#include "XVTelescope.h"
 #include "Planet.h"
 
-Telescope::Telescope() :
-	H(8,12),
-	Rm(8,8),
-	Rmi(8,8)
+const int XVTelescope::N_OBSERVABLES = 8;
+
+XVTelescope::XVTelescope() :
+	H(N_OBSERVABLES,12),
+	Rm(N_OBSERVABLES,N_OBSERVABLES),
+	Rmi(N_OBSERVABLES,N_OBSERVABLES)
 {
     H.setIdentity();
     std::cout << "Observation operator = " << std::endl << H << std::endl;
@@ -25,19 +27,19 @@ Telescope::Telescope() :
     Rmi = Rm.inverse();
 }
 
-Telescope::~Telescope() {
+XVTelescope::~XVTelescope() {
 	// TODO Auto-generated destructor stub
 }
 
-VectorXd Telescope::operator()(VectorXd &x) {
+VectorXd XVTelescope::operator()(VectorXd &x) {
 	return(H*x);
 }
-MatrixXd &Telescope::tangent(VectorXd &x) {
+MatrixXd &XVTelescope::tangent(VectorXd &x) {
 	return(H);
 }
-MatrixXd &Telescope::R() {
+MatrixXd &XVTelescope::R() {
 	return(Rm);
 }
-MatrixXd &Telescope::Rinv() {
+MatrixXd &XVTelescope::Rinv() {
 	return(Rmi);
 }

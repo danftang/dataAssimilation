@@ -7,15 +7,17 @@
 
 #include "ThreeBodyModel.h"
 
-ThreeBodyModel::ThreeBodyModel() :
-	x(12),
-	M(12,12),
-	p1(x,M,0),
-	p2(x,M,4),
-	p3(x,M,8)
-{
-	// TODO Auto-generated constructor stub
+const int ThreeBodyModel::N_VARS = 15;
 
+ThreeBodyModel::ThreeBodyModel() :
+	x(N_VARS),
+	M(N_VARS,N_VARS),
+	p1(x,M,0),
+	p2(x,M,5),
+	p3(x,M,10)
+{
+    // Fill in null part of tangent linear model (parameters)
+    // M(12,12) = 1.0;
 }
 
 void ThreeBodyModel::step() {
@@ -35,7 +37,7 @@ MatrixXd &ThreeBodyModel::tangent() {
 /**
  * Set state to first guess given observation vector at time t=0
  */
-void ThreeBodyModel::firstGuess(VectorXd &initialObs) {
-    x.head<8>() = initialObs;
-    p3.initState();
-}
+//void ThreeBodyModel::firstGuess(VectorXd &initialObs) {
+//    x.head<8>() = initialObs;
+//    p3.initState();
+//}

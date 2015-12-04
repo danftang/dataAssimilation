@@ -20,16 +20,19 @@ class Planet
         void initState();
         void step(Planet &, Planet &);
 
-        double m;           // mass
+        double &m;           // mass
         Eigen::VectorBlock<Eigen::VectorXd,2> 	x;	// position
         Eigen::VectorBlock<Eigen::VectorXd,2> 	v;	// velocity
-        Eigen::Block<Eigen::MatrixXd,4,12> 		M;	// Tangent linear model
         Eigen::Block<Eigen::MatrixXd,2,2> 		dxp_dx;		// dx'/dx
         Eigen::Block<Eigen::MatrixXd,2,2> 		dxp_dx1;	// dx'/dx1
+        Eigen::Block<Eigen::MatrixXd,2,1> 		dxp_dm1;    // dx'/dm1
         Eigen::Block<Eigen::MatrixXd,2,2> 		dxp_dx2;	// dx'/dx2
+        Eigen::Block<Eigen::MatrixXd,2,1> 		dxp_dm2;    // dx'/dm1
         Eigen::Block<Eigen::MatrixXd,2,2> 		dvp_dx;		// dv'/dx
         Eigen::Block<Eigen::MatrixXd,2,2> 		dvp_dx1;	// dv'/dx1
+        Eigen::Block<Eigen::MatrixXd,2,1> 		dvp_dm1; 	// dv'/dm1
         Eigen::Block<Eigen::MatrixXd,2,2> 		dvp_dx2;	// dv'/dx2
+        Eigen::Block<Eigen::MatrixXd,2,1> 		dvp_dm2; 	// dv'/dm1
 
         static const double G;  // gravitational constant
         static const double AU; // Astronomical unit

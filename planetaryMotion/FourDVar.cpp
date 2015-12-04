@@ -15,7 +15,7 @@ FourDVar::FourDVar(Model &m, ObservationOperator &obs, std::vector<VectorXd> &ob
 	P0inv(P0i),
 	b0(b0i),
 //	solver(NLOPT_LD_MMA,12)
-	solver(NLOPT_LD_SLSQP,12)
+	solver(NLOPT_LD_SLSQP,m.state().size())
 //	lambda(m.state().size())
 {
 }
@@ -33,8 +33,8 @@ void FourDVar::assimilate(VectorXd &x0) {
 		return;
 	}
     solver.set_min_objective(*this);
-    solver.set_ftol_abs(1e-16);
-    solver.set_ftol_rel(0.0);
+    solver.set_ftol_abs(1e-10);
+    solver.set_ftol_rel(1e-10);
     info = solver.optimize(x0);
 	std::cout << "Solver returned " << info << std::endl;
 //	std::cout << "x0 =" << x0 << std::endl;

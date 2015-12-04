@@ -10,10 +10,10 @@
 
 #include "ObservationOperator.h"
 
-class Telescope: public ObservationOperator {
+class XVTelescope: public ObservationOperator {
 public:
-	Telescope();
-	virtual ~Telescope();
+	XVTelescope();
+	virtual ~XVTelescope();
 
 	VectorXd operator()(VectorXd &);
 	MatrixXd &tangent(VectorXd &);
@@ -24,6 +24,7 @@ public:
 	MatrixXd H;
 	MatrixXd Rm;
 	MatrixXd Rmi;
+	static const int N_OBSERVABLES;
 };
 
 #endif /* TELESCOPE_H_ */

@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1449156922 source:/home/daniel/git/dataAssimilation/planetaryMotion/FourDVar.cpp
+	<iostream>
+	"FourDVar.h"
+
+1447258717 /home/daniel/git/dataAssimilation/planetaryMotion/FourDVar.h
+	<Eigen/Dense>
+	<vector>
+	"ObservationOperator.h"
+	"Model.h"
+	"nloptEigen.hpp"
+
+1446733891 /home/daniel/git/dataAssimilation/planetaryMotion/ObservationOperator.h
+	<eigen3/Eigen/Dense>
+
+1446733686 /home/daniel/git/dataAssimilation/planetaryMotion/Model.h
+	<eigen3/Eigen/Dense>
+
+1447264303 /home/daniel/git/dataAssimilation/planetaryMotion/nloptEigen.hpp
+	<nlopt.h>
+	<functional>
+	<Eigen/Core>
+
+1449151395 source:/home/daniel/git/dataAssimilation/planetaryMotion/Planet.cpp
+	"Planet.h"
+
+1449071083 /home/daniel/git/dataAssimilation/planetaryMotion/Planet.h
+	<random>
+	<eigen3/Eigen/Dense>
+	<eigen3/Eigen/Core>
+
+1449150953 source:/home/daniel/git/dataAssimilation/planetaryMotion/ThreeBodyModel.cpp
+	"ThreeBodyModel.h"
+
+1449060966 /home/daniel/git/dataAssimilation/planetaryMotion/ThreeBodyModel.h
+	"Model.h"
+	"Planet.h"
+
+1449157628 source:/home/daniel/git/dataAssimilation/planetaryMotion/XTelescope.cpp
+	<iostream>
+	"XTelescope.h"
+	"Planet.h"
+	"ThreeBodyModel.h"
+
+1447956805 /home/daniel/git/dataAssimilation/planetaryMotion/XTelescope.h
+	"ObservationOperator.h"
+
+1447954985 source:/home/daniel/git/dataAssimilation/planetaryMotion/XVTelescope.cpp
+	<iostream>
+	"XVTelescope.h"
+	"Planet.h"
+
+1447954994 /home/daniel/git/dataAssimilation/planetaryMotion/XVTelescope.h
+	"ObservationOperator.h"
+
