@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1449497514 source:/home/daniel/git/dataAssimilation/ceresTest/main.cpp
+	<iostream>
+	"ceres/ceres.h"
+	"glog/logging.h"
+	"Model.h"
+
+1449498107 /home/daniel/git/dataAssimilation/ceresTest/include/Model.h
+	"ceres/ceres.h"
+
+1449498289 source:/home/daniel/git/dataAssimilation/ceresTest/src/Model.cpp
+	"Model.h"
+
