@@ -12,7 +12,9 @@
 class Population {
     public:
 
-    static constexpr int N_AGENTS = 1000;
+    static constexpr int N_AGENTS = 10000;
+    static constexpr double dt = 0.1;
+    static constexpr double mu = dt*0.02;//dt*1.0/(65.0*104.0); // mortality (per meeting)
 
     Population();;
     void step();

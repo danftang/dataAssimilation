@@ -21,16 +21,20 @@ public:
         s = SUSEPTIBLE;
     }
 
-    void step();
-    void meet(ImmuneState &);
+    void step(ImmuneState &crossState);
+    void meet(ImmuneState &, ImmuneState &);
     bool isSuseptible() {return s == SUSEPTIBLE;}
     bool isInfected() {return s == INFECTED;}
 
     STATE s;
 
 protected:
-    static constexpr double alpha = 2.0;
-    static constexpr double gamma = 52.0;
+    static const double alpha;
+    static const double gamma;
+    static const double beta;
+    static const double phi;
+    static const double epsilon;
+
     static std::default_random_engine generator;
     static std::uniform_real_distribution<double> distribution;
 };

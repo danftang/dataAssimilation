@@ -7,10 +7,9 @@ using namespace std;
 
 int main() {
 
-    const int N_AGENTS = 1000;
     Population population;
 
-    for(int step=0; step<1000; ++step) {
+    for(int step=0; step<500; ++step) {
         population.step();
         std::cout << population.nInfected() << " " << population.nSuseptible() << std::endl;
     }

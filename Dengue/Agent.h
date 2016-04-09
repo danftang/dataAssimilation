@@ -5,7 +5,6 @@
 #ifndef DENGUE_AGENT_H
 #define DENGUE_AGENT_H
 
-
 #include "ImmuneState.h"
 
 class Agent {
@@ -18,6 +17,10 @@ public:
 
     ImmuneState strain1;
     ImmuneState strain2;
+
+    static std::default_random_engine generator;
+    static std::uniform_real_distribution<double> distribution;
+
 };
 
 
