@@ -2,11 +2,12 @@
 // Created by daniel on 06/04/16.
 //
 
-#include "ImmuneState.h"
-#include "Population.h"
+#include "ImmuneState.hpp"
+#include "Population.hpp"
 
 std::uniform_real_distribution<double> ImmuneState::distribution(0.0,1.0);
-std::default_random_engine ImmuneState::generator;
+//std::default_random_engine ImmuneState::generator;
+std::mt19937 ImmuneState::generator;
 
 const double ImmuneState::alpha = Population::dt*2.0/104.0; // rate of loss of cross immunity
 const double ImmuneState::gamma = Population::dt*1.0;//Population::dt*1.0/2.0; // rate of recovery
@@ -51,5 +52,17 @@ void ImmuneState::meet(ImmuneState &other, ImmuneState &otherCrossStrain) {
     }
 }
 
-
+std::ostream &operator <<(std::ostream &out, const ImmuneState &state) {
+    switch(state.s) {
+    case ImmuneState::CROSSIMMUNE:
+            out << "c"; break;
+    case ImmuneState::SUSEPTIBLE:
+            out << "s"; break;
+    case ImmuneState::INFECTED:
+            out << "i"; break;
+    case ImmuneState::RECOVERED:
+            out << "r"; break;
+    }
+    return(out);
+}
 
