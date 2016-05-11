@@ -1,0 +1,23 @@
+digraph Dengue {
+si [shape=hexagon];
+is [shape=hexagon];
+ii [shape=hexagon];
+ri [shape=hexagon];
+ir [shape=hexagon];
+ss [shape=box];
+rs [shape=box];
+sr [shape=box];
+ss -> si;
+ss -> is;
+si -> cr;
+cr -> sr;
+is -> rc;
+rc -> rs;
+rs -> ri;
+ri -> rr;
+sr -> ir;
+ir -> rr;
+si -> ii;
+is -> ii;
+ii -> rr;
+}
