@@ -1,7 +1,6 @@
 //
 // Created by daniel on 06/04/16.
 //
-
 #include "ImmuneState.hpp"
 #include "Population.hpp"
 
@@ -9,11 +8,11 @@ std::uniform_real_distribution<double> ImmuneState::distribution(0.0,1.0);
 //std::default_random_engine ImmuneState::generator;
 std::mt19937 ImmuneState::generator;
 
-const double ImmuneState::alpha = Population::dt*2.0/104.0; // rate of loss of cross immunity
-const double ImmuneState::gamma = Population::dt*1.0;//Population::dt*1.0/2.0; // rate of recovery
-const double ImmuneState::beta = Population::dt*2.0;//Population::dt*1.0; // rate of infection
-const double ImmuneState::phi = 3.0;//0.7; // factor of infectivity given cross immunity
-const double ImmuneState::epsilon = Population::dt*0.001; // background infection rate
+const double ImmuneState::alpha = 0.1*2.0/104.0; // rate of loss of cross immunity
+const double ImmuneState::gamma = 0.1*1.0;//Population::dt*1.0/2.0; // rate of recovery
+const double ImmuneState::beta = 0.1*2.0;//Population::dt*1.0; // rate of infection
+const double ImmuneState::phi = 3.0;//3.0;//0.7; // factor of infectivity given cross immunity
+const double ImmuneState::epsilon = 0.0;//Population::dt*0.001; // background infection rate
 
 void ImmuneState::step(ImmuneState &crossState) {
     switch(s) {

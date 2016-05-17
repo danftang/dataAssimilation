@@ -84,7 +84,7 @@ void simWithNudging() {
   bool first;
   for(y=-5.0; y<5.0; y+=0.5) {
     first = true;
-    for(z=0.0; z<28.0; z+=0.5) {
+    for(z=20.0; z<30.0; z+=0.5) {
       generateNudgedOrbit(simulation, 0.66978, y, z, OBS, observations, 40.0);
       if(first) first = false; else std::cout << ", ";
       std::cout << calcError(simulation, observations, OBS);

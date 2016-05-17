@@ -16,11 +16,12 @@ Population::Population(PopulationDistribution &dist) : randAgent(0, N_AGENTS - 1
 
 void Population::step() {
     int n;
-    int m;
+    int m,m2;
     int t;
     for(t=0; t<1.0/dt; ++t) {
         for (n = 0; n < N_AGENTS; ++n) {
             m = randAgent(generator);
+//            m2 = randAgent(generator);
             agents[n].step(agents[m]);
         }
     }
@@ -33,11 +34,13 @@ void Population::step() {
 * infected and uninfected sets roughly the same.
 ***/
 void Population::nudge(int obsInfected) {
+  const double obsMix = 1.0;
   double targetInfected, infectedMultiplier, uninfectedMultiplier;
   std::array<double,11> frequencies = getFrequencies();
   double pInfected = frequencies[1] + frequencies[2] + frequencies[3];
 
-  targetInfected = (obsInfected*1.0/N_AGENTS + pInfected)/2.0;
+
+  targetInfected = obsInfected*obsMix/N_AGENTS + pInfected*(1.0-obsMix);
   infectedMultiplier = targetInfected/pInfected;
   uninfectedMultiplier = (1.0-targetInfected)/(1.0-pInfected);
 
