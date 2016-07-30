@@ -1,0 +1,32 @@
+Hi Doyne,
+
+Quick update on my data assimilation research:
+
+I've developed a much more sophisticated nudging strategy which I think is quite nice. The idea is developed from the literature on synchronization of chaos, as follows:
+
+Suppose we have two dynamical systems
+
+X_{t+1} = F(X_t)
+Y_{t+1} = G(Y_t)
+
+where F represents reality and G represents our simulation. Now suppose that we couple the two systems, so that reality applies a force on the simulation via our observations and our nudging strategy
+
+X_{t+1} = F(X_t)
+Y_{t+1} = G(Y_t) + N(O(X_{t+1}))
+
+where O is our observation operator and N is our nudging strategy.
+
+If we consider the phase space of the coupled systems (X,Y) we can define the "synchronization manifold" as X=Y. Our aim in designing N is to make this manifold stable. A simple way of doing this is to define N to be
+
+N(x) = JHJ(x - O(G(Y_t)))
+
+where J is the Jacobian of G at time t and H is the Jacobian of the observation operator at G(Y_t).
+
+The idea is that the simulation will tend to drift from reality along its unstable manifold (on the assumption that F and G are similar dynamical systems), so we want to nudge along this manifold more than the stable manifold. To do this, we simply nudge the simulation at time t+1 along the direction that minimises the perturbation in the simulation's trajectory at time t. The perturbation at time t is in the direction of the gradient HJ, so the perturbation at time t+1 is in the direction of JHJ.
+
+I've implemented this scheme for the trusty Lorenz equations where the observation is the Y coordinate. I attach a plot of the convergence of the system to the synchronization manifold, the green line is with the nudging system, and for comparison the purple line is for the simple system where the Y coordinate is set equal to the observation. The x coordinate is the timestep and the y coordinate is the log of the Euclidean distance to the synchronization manifold. The start state was X_0 = (1,1,1)
+
+
+
+
+

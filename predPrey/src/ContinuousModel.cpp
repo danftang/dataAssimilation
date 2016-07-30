@@ -1,3 +1,23 @@
+/***
+As described in "Spiral chaos in a predator-rey model
+Gilpin 1979
+
+Phase space is 3 dimensional N1,N2,N3
+
+Equations of motion are
+
+dNi/dt = Ni(ri - sum_j aijNj)
+
+where aij are coeffs in i and j, and ri are coeffs in i
+
+Populations are stored as population[i] = si(log(Ni)+bi),
+where si=scale, bi=base, so that
+
+dpi/dt = s(ri - sum_j aij e^(pi/s-b))
+
+
+***/
+
 #include <cmath>
 #include "ContinuousModel.h"
 
